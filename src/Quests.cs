@@ -38,6 +38,11 @@ namespace APConversations
                     var choice = E.Element.AddChoice(null, null, "APDeliveryList");
                     choice.AddPart(new DeliverItem(loc.Key));
 
+                    if (loc.Value.Amount == 1)
+                    {
+                        choice.AddPart(new TakeItem(loc.Value.Blueprint));
+                    }
+
                     var item = The.Player.FindObjectInInventory(loc.Value.Blueprint);
                     if (item != null && item.Count >= loc.Value.Amount)
                     {
