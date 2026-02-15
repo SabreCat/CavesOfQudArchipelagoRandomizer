@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objects>
+  <object Name="Sheaf1" Load="Merge">
+    <part Name="APTaken" APLocation="Sheaf of tattered parchment"></part>
+  </object>
+  <object Name="Corpus" Load="Merge">
+    <part Name="APTaken" APLocation="Corpus Choliys"></part>
+  </object>
+  <object Name="Sonnet" Load="Merge">
+    <part Name="APTaken" APLocation="Crumpled sheet of paper"></part>
+  </object>
+  <object Name="BloodstainedSheaf" Load="Merge">
+    <part Name="APTaken" APLocation="Sheaf of bloodstained goatskin parchment"></part>
+  </object>
+</objects>

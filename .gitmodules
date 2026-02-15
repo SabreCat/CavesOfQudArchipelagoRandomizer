@@ -1,3 +1,4 @@
 [submodule "Archipelago"]
 	path = Archipelago
-	url = git@github.com:lonesurv1vor/Archipelago.git
+	url = git@github.com:SabreCat/Archipelago.git
+	branch = cavesofqud
