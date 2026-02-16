@@ -60,7 +60,7 @@ public static class APLocalOptions
 [Serializable]
 public class APGame : IPlayerSystem
 {
-    public static APGame Instance => The.Game.GetSystem<APGame>();
+    public static APGame Instance => The.Game.RequireSystem<APGame>();
     public PersistentData Data = new();
 
 
