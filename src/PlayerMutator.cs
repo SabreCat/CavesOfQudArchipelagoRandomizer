@@ -1,3 +1,4 @@
+using System;
 using XRL;
 using XRL.World;
 
@@ -6,7 +7,7 @@ public class APPlayerMutator : IPlayerMutator
 {
     public void mutate(GameObject player)
     {
-        var apg = player.RequirePart<APGame>();
+        var apg = The.Game.RequireSystem<APGame>();
 
         if (!apg.Setup())
         {
@@ -29,7 +30,7 @@ public class APLoadGameHandler
     [CallAfterGameLoaded]
     public static void OnGameLoaded()
     {
-        var apg = The.Player.RequirePart<APGame>();
+        var apg = The.Game.RequireSystem<APGame>();
 
         if (!apg.Setup())
         {

@@ -58,9 +58,9 @@ public static class APLocalOptions
 }
 
 [Serializable]
-public class APGame : IPart
+public class APGame : IPlayerSystem
 {
-    public static APGame Instance => The.Player.GetPart<APGame>();
+    public static APGame Instance => The.Game.GetSystem<APGame>();
     public PersistentData Data = new();
 
 
@@ -312,12 +312,18 @@ public class APGame : IPart
         }
     }
 
-    public override bool WantEvent(int ID, int cascade)
+    public override void Register(XRLGame game, IEventRegistrar registrar)
     {
-        if (ID == BeforeRenderEvent.ID || ID == ZoneActivatedEvent.ID || ID == EndTurnEvent.ID || ID == AfterDieEvent.ID)
-            return true;
+        registrar.Register(EndTurnEvent.ID);
+        registrar.Register(ZoneActivatedEvent.ID);
+        base.Register(game, registrar);
+    }
 
-        return base.WantEvent(ID, cascade);
+    public override void RegisterPlayer(GameObject player, IEventRegistrar registrar)
+    {
+        registrar.Register(AfterDieEvent.ID);
+        registrar.Register(BeforeRenderEvent.ID);
+        base.RegisterPlayer(player, registrar);
     }
 
     public override bool HandleEvent(AfterDieEvent E)
@@ -342,7 +348,6 @@ public class APGame : IPart
 
     public override bool HandleEvent(BeforeRenderEvent E)
     {
-
         ProcessMessages();
         ProcessDeathLink();
         ProcessReceivedItems();
