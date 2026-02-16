@@ -1,8 +1,9 @@
 # Features
 * Locations to check:
   * By gaining XP. The amount of checks per level can be configured.
-  * Main quest and some side quest steps
+  * Main quest and early game side quest steps
   * Deliver items to Argyve or the Grit Gate Intercom (talk with them to see a list).
+  * Finding guaranteed-spawn lore items, such as sheaves of variously damaged parchment.
 * Items to receive:
   * Level up gains (HP, mutation points, skill points, attribute points / bonus). These are
     considered the main progress mechanic because they mainly limit what a player can do and where
