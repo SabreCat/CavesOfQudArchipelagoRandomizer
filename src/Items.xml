@@ -12,4 +12,13 @@
   <object Name="BloodstainedSheaf" Load="Merge">
     <part Name="APTaken" APLocation="Sheaf of bloodstained goatskin parchment"></part>
   </object>
+  <object Name="Ruin of House Isner" Load="Merge">
+    <part Name="APTaken" APLocation="Ruin of House Isner"></part>
+  </object>
+  <object Name="Stopsvaalinn" Load="Merge">
+    <part Name="APTaken" APLocation="Stopsvalinn"></part>
+  </object>
+  <object Name="Kindrish" Load="Merge">
+    <part Name="APTaken" APLocation="Kindrish"></part>
+  </object>
 </objects>
