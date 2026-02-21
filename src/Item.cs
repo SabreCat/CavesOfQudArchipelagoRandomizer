@@ -171,24 +171,33 @@ public static class Items
         //     The.Player.GiveDrams(item.Amount(), item.Blueprint());
         // }
         // TODO
-        else if (item.Name.StartsWith("Unlock: "))
-        {
-            GameLog.LogGameplay($"Received '{item.Name}'", APLocalOptions.PopupOnReceivedItem);
-        }
         else
         {
             switch (item.Name)
             {
+                case "Ancient Knickknack":
+                case "Prime Knickknack":
+                case "Weirdwire Fusor":
+                case "Barathrumite Token":
+                case "Waydroid Repair Kit":
+                case "Eschaton Transcoder":
+                case "Baetyl Optronic Adapter":
+                case "Consortium Token":
+                case "Water Farmer Token":
+                case "Hindren Token":
+                case "Kyakukya Token":
+                    GameLog.LogGameplay($"Received quest item '{item.Name}'", APLocalOptions.PopupOnReceivedItem);
+                    return;
                 case "Hit Points":
                     The.Player.GetPart<PlayerStatsMod>().AddHitPoints();
                     return;
-                case "Attribute Points":
+                case "Attribute Point":
                     The.Player.GetPart<PlayerStatsMod>().AddAttributePoints();
                     return;
                 case "Attribute Bonus":
                     The.Player.GetPart<PlayerStatsMod>().AddAttributeBonus();
                     return;
-                case "Mutation Points":
+                case "Mutation Point":
                     The.Player.GetPart<PlayerStatsMod>().AddMutationPoints();
                     return;
                 case "Skill Points":

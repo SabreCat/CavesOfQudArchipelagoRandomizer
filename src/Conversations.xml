@@ -3,118 +3,45 @@
   <conversation ID="Argyve">
     <choice Target="APDeliveryList">[AP] Deliver an item</choice>
     <node ID="APDeliveryList">
-      <text>Give me your all your knickknacks and everything else!</text>
+      <text>Give me all your knickknacks and everything else!</text>
       <part Name="APConversations.AcceptItemDelivery"></part>
       <choice Target="End">That's all.</choice>
-    </node>
-    <node ID="Cave">
-      <choice
-        Target="End"
-        IfHasReceivedAPItem="Unlock: Fetch Argyve a Knickknack~Find a Knickknack"
-      ></choice>
-      <choice
-        Target="End"
-        IfNotHasReceivedAPItem="Unlock: Fetch Argyve a Knickknack~Find a Knickknack"
-        >[AP] I've not received permission yet</choice
-      >
     </node>
     <start ID="StartHasFetch1">
       <choice
         Target="GiveKnickknack"
-        IfHasReceivedAPItem="Unlock: Fetch Argyve a Knickknack~Return to Argyve"
+        IfHasReceivedAPItem="Ancient Knickknack"
       ></choice>
       <choice
         Target="End"
-        IfNotHasReceivedAPItem="Unlock: Fetch Argyve a Knickknack~Return to Argyve"
-        >[AP] I found your knickknack, but I've not received permission yet</choice
-      >
-    </start>
-    <start ID="GiveKnickknack">
-      <choice
-        Target="End"
-        IfHasReceivedAPItem="Unlock: Fetch Argyve Another Knickknack~Find Another Knickknack"
-      ></choice>
-      <choice
-        Target="End"
-        IfNotHasReceivedAPItem="Unlock: Fetch Argyve Another Knickknack~Find Another Knickknack"
-        >[AP] I've not received permission yet</choice
+        IfNotHasReceivedAPItem="Ancient Knickknack"
+        >[AP] Artifacts I may have, but I still seek an {{m|Ancient Knickknack}} worthy of your notice.</choice
       >
     </start>
     <start ID="StartHasFetch2">
       <choice
         Target="Impressive"
-        IfHasReceivedAPItem="Unlock: Fetch Argyve Another Knickknack~Return to Argyve"
+        IfHasReceivedAPItem="Prime Knickknack"
       ></choice>
       <choice
         Target="End"
-        IfNotHasReceivedAPItem="Unlock: Fetch Argyve Another Knickknack~Return to Argyve"
-        >[AP] I found your knickknack, but I've not received permission yet</choice
+        IfNotHasReceivedAPItem="Prime Knickknack"
+        >[AP] I will truly impress you when I find a {{m|Prime Knickknack}} to accompany my artifact.</choice
       >
     </start>
-    <start ID="GiveKnickknack">
-      <choice
-        Target="End"
-        IfHasReceivedAPItem="Unlock: Fetch Argyve Another Knickknack~Find Another Knickknack"
-      ></choice>
-      <choice
-        Target="End"
-        IfNotHasReceivedAPItem="Unlock: Fetch Argyve Another Knickknack~Find Another Knickknack"
-        >[AP] I've not received permission yet</choice
-      >
-    </start>
-    <start ID="StartHasFetch2">
-      <choice
-        Target="Impressive"
-        IfHasReceivedAPItem="Unlock: Fetch Argyve Another Knickknack~Return to Argyve"
-      ></choice>
-      <choice
-        Target="End"
-        IfNotHasReceivedAPItem="Unlock: Fetch Argyve Another Knickknack~Return to Argyve"
-        >[AP] I found your knickknack, but I've not received permission yet</choice
-      >
-    </start>
-    <node ID="Weirdwire">
-      <choice
-        GotoID="End"
-        StartQuest="Weirdwire Conduit... Eureka!"
-        IfHasReceivedAPItem="Unlock: Weirdwire Conduit... Eureka!~Find 200 Feet of Wire"
-      ></choice>
-      <choice
-        GotoID="End"
-        IfNotHasReceivedAPItem="Unlock: Weirdwire Conduit... Eureka!~Find 200 Feet of Wire"
-        >[AP] I've not received permission yet</choice
-      >
-    </node>
     <start ID="TheWire">
       <choice
         GotoID="GiveWire"
-        IfHasReceivedAPItem="Unlock: Weirdwire Conduit... Eureka!~Return to Argyve"
+        IfHasReceivedAPItem="Weirdwire Fusor"
       ></choice>
       <choice
         GotoID="End"
-        IfNotHasReceivedAPItem="Unlock: Weirdwire Conduit... Eureka!~Return to Argyve"
-        >[AP] I've not received permission yet</choice
+        IfNotHasReceivedAPItem="Weirdwire Fusor"
       >
+      [AP] I have the wire, but it's in pieces. We'll need a {{m|Weirdwire Fusor}} to splice them.
+      </choice>
       <choice GotoID="End">I don't have enough yet.</choice>
     </start>
-    <node ID="Canticle1">
-      <choice
-        Target="CanticleAccept1"
-        IfHasReceivedAPItem="Unlock: A Canticle for Barathrum~Travel to Grit Gate"
-      ></choice>
-    </node>
-    <node ID="WhoBarathrumites">
-      <choice
-        Target="CanticleAccept1"
-        IfHasReceivedAPItem="Unlock: A Canticle for Barathrum~Travel to Grit Gate"
-      ></choice>
-      <choice
-        Merge="Add"
-        Target="End"
-        IfNotHasReceivedAPItem="Unlock: A Canticle for Barathrum~Travel to Grit Gate"
-        >[AP] I've not received permission yet</choice
-      >
-    </node>
   </conversation>
   <conversation ID="Gritgate Intercom" Inherits="">
     <choice Target="APDeliveryList">[AP] Deliver an item</choice>
@@ -123,40 +50,229 @@
       <part Name="APConversations.AcceptItemDelivery"></part>
       <choice Target="End">That's all.</choice>
     </node>
-    <node ID="GaveDiskFromVillage">
+    <node ID="Start" IfNotHaveQuest="More Than a Willing Spirit" Load="Replace">
+      <text>
+        &amp;B[&amp;CVoice transmitting through panel&amp;B]&amp;y
+
+        Be gone, wayfarer. This is no place for you.
+      </text>
+      <choice GotoID="TradeEntrance" IfFinishedQuest="What's Eating the Watervine?">I come by way of Joppa. The elder Irudad calls me friend.</choice>
+      <choice GotoID="TradeEntrance" IfHaveItem="Merchant's Token">I am a merchant, cave dweller. I wish only to trade.</choice>
       <choice
-        GotoID="End"
-        IfHasReceivedAPItem="Unlock: More Than a Willing Spirit~Travel to Golgotha"
-        StartQuest="More Than a Willing Spirit"
-        TakeItem="Stamped Data Disk"
-      ></choice>
-      <choice
-        GotoID="End"
-        IfNotHasReceivedAPItem="Unlock: More Than a Willing Spirit~Travel to Golgotha"
-        >[AP] I've not received permission yet</choice
+        GotoID="GiveDisk"
+        IfHaveQuest="A Canticle for Barathrum"
+        CompleteQuestStep="A Canticle for Barathrum~Speak with the Barathrumites"
+        IfHasReceivedAPItem="Barathrumite Token"
       >
+        Wait! My name is =name=. I bring a message from Argyve of Joppa.
+      </choice>
+      <choice
+        GotoID="End"
+        IfHaveQuest="A Canticle for Barathrum"
+        IfNotHasReceivedAPItem="Barathrumite Token"
+      >
+        [AP] (I'll need to present a {{m|Barathrumite Token}} to prove my good intentions.)
+      </choice>
+      <choice GotoID="End" IfNotHaveQuest="A Canticle for Barathrum" IfHasReceivedAPItem="Barathrumite Token">...</choice>
+    </node>
+  </conversation>
+  <conversation ID="Mehmet">
+    <start ID="Welcome">
+      <choice
+        Target="Work"
+        IfNotHaveQuest="What's Eating the Watervine?"
+        IfHasReceivedAPItem="Water Farmer Token">
+      </choice>
+      <choice
+        GotoID="End"
+        IfNotHaveQuest="What's Eating the Watervine?"
+        IfNotHasReceivedAPItem="Water Farmer Token"
+      >[AP] (If I approach bearing a {{m|Water Farmer Token}}, he might offer me work.)
+      </choice>
+    </start>
+  </conversation>
+  <conversation ID="Lulihart" Inherits="BaseSlynthMayor">
+    <node ID="Job seeker">
+      <choice
+        GotoID="Very Well"
+        IfHasReceivedAPItem="Hindren Token">
+      </choice>
+      <choice
+        GotoID="End"
+        IfNotHasReceivedAPItem="Hindren Token"
+      >[AP] (A promising opportunity, but the hindriarch of Bey Lah will not see me unless I can produce a {{m|Hindren Token}}.)
+      </choice>
+    </node>
+    <node ID="Who">
+      <choice
+        GotoID="Very Well"
+        IfHasReceivedAPItem="Hindren Token">
+      </choice>
+      <choice
+        GotoID="End"
+        IfNotHasReceivedAPItem="Hindren Token"
+      >[AP] (A promising opportunity, but the hindriarch of Bey Lah will not see me unless I can produce a {{m|Hindren Token}}.)
+      </choice>
+    </node>
+    <node ID="How">
+      <choice
+        GotoID="Very Well"
+        IfHasReceivedAPItem="Hindren Token">
+      </choice>
+      <choice
+        GotoID="End"
+        IfNotHasReceivedAPItem="Hindren Token"
+      >[AP] (A promising opportunity, but the hindriarch of Bey Lah will not see me unless I can produce a {{m|Hindren Token}}.)
+      </choice>
+    </node>
+    <node ID="Why">
+      <choice
+        GotoID="Very Well"
+        IfHasReceivedAPItem="Hindren Token">
+      </choice>
+      <choice
+        GotoID="End"
+        IfNotHasReceivedAPItem="Hindren Token"
+      >[AP] (A promising opportunity, but the hindriarch of Bey Lah will not see me unless I can produce a {{m|Hindren Token}}.)
+      </choice>
+    </node>
+    <node ID="Why Not">
+      <choice
+        GotoID="Very Well"
+        IfHasReceivedAPItem="Hindren Token">
+      </choice>
+      <choice
+        GotoID="End"
+        IfNotHasReceivedAPItem="Hindren Token"
+      >[AP] (A promising opportunity, but the hindriarch of Bey Lah will not see me unless I can produce a {{m|Hindren Token}}.)
+      </choice>
+    </node>
+  </conversation>
+  <conversation ID="Keh" Inherits="BaseSlynthMayor">
+    <node
+      ID="Start"
+      IfNotHaveQuest="Find Eskhind"
+      IfNotHasReceivedAPItem="Hindren Token"
+    >
+      <text>
+        Live and drink, kendren.
+
+        {{emote|*The hindriarch otherwise coolly ignores you.*}}
+      </text>
+      <choice GotoID="Yes. Go on." Load="Remove"></choice>
+      <choice GotoID="No." Load="Remove"></choice>
+      <choice GotoID="End">
+        [AP] (I'll need a {{m|Hindren Token}} to gain audience with these insular folk.)
+      </choice>
+    </node>
+    <node
+      ID="Start"
+      IfNotHaveQuest="Find Eskhind"
+      IfHasReceivedAPItem="Hindren Token"
+    >
+      <text>
+        Live and drink, kendren. I am Hindriarch Keh; welcome to Bey Lah.
+
+        It's nearly unprecedented for one such as you to pass by our scouts unaccosted, but these are unprecedented circumstances. I have a task for you. Are you interested?
+      </text>
+      <choice GotoID="Yes. Go on.">Yes. Go on.</choice>
+      <choice GotoID="No.">No.</choice>
+    </node>
+  </conversation>
+  <conversation ID="Indrix">
+    <node ID="Start" IfNotHaveQuest="Raising Indrix" Load="Replace">
+      <text>
+        Make haste, traveller.
+      </text>
+      <choice GotoID="PariahA">Why are you called "pariah"?</choice>
+      <choice GotoID="Raising1" IfHasReceivedAPItem="Kyakukya Token">I am in search of work.</choice>
+      <choice GotoID="End" IfNotHasReceivedAPItem="Kyakukya Token">
+        [AP] (If I approach bearing a {{m|Kyakukya Token}}, he might offer me work.)
+      </choice>
+      <choice GotoID="End" IfHasReceivedAPItem="Kyakukya Token">Live and drink, warden.</choice>
+    </node>
+  </conversation>
+  <conversation ID="Q Girl">
+    <node ID="Disk" Load="Replace">
+      <text IfHasReceivedAPItem="Eschaton Transcoder">
+        I do, brave friend. I'll imprint them now.
+      </text>
+      <choice
+        GotoID="End"
+        IfHaveQuest="Decoding the Signal"
+        IfHasReceivedAPItem="Eschaton Transcoder"
+        CompleteQuestStep="Decoding the Signal~Get Q Girl's Instructions onto the Data Disk"
+        TakeItem="Argyve's Data Disk"
+        GiveItem="Argyve's Data Disk Encoded"
+      >
+        Thank you, Q Girl.
+      </choice>
+      <text IfNotHasReceivedAPItem="Eschaton Transcoder">
+        I could, brave friend. But I seem to have misplaced my {{m|Eschaton Transcoder}}. Have you seen it anywhere?
+      </text>
+      <choice
+        GotoID="End"
+        IfHaveQuest="Decoding the Signal"
+        IfNotHasReceivedAPItem="Eschaton Transcoder"
+      >
+        [AP] I will search all the worlds until I find one.
+      </choice>
+    </node>
+  </conversation>
+  <conversation ID="BethesdaBaetyl" Load="Replace">
+    <node ID="Start">
+      <text>
+        [The Baetyl emits an almost subliminal glow.]
+      </text>
+      <choice
+        GotoID="End"
+        IfHaveQuest="Decoding the Signal"
+        IfFinishedQuestStep="Decoding the Signal~Get Q Girl's Instructions onto the Data Disk"
+        IfNotFinishedQuestStep="Decoding the Signal~Decode the Signal"
+        IfHasReceivedAPItem="Baetyl Optronic Adapter"
+        CompleteQuestStep="Decoding the Signal~Decode the Signal"
+      >
+        [Insert Disk]
+      </choice>
+      <choice
+        GotoID="End"
+        IfHaveQuest="Decoding the Signal"
+        IfFinishedQuestStep="Decoding the Signal~Get Q Girl's Instructions onto the Data Disk"
+        IfNotFinishedQuestStep="Decoding the Signal~Decode the Signal"
+        IfNotHasReceivedAPItem="Baetyl Optronic Adapter"
+      >
+        [AP] [To your dismay, the disk doesn't fit. You'll need a {{m|Baetyl Optronic Adapter}}.]
+      </choice>
+      <choice GotoID="End">[Leave]</choice>
     </node>
   </conversation>
   <conversation ID="Otho" Inherits="BaseSlynthMayor">
-    <node
-      Load="Replace"
-      ID="Start"
-      IfFinishedQuest="More Than a Willing Spirit"
-      IfNotHaveQuest="Decoding the Signal"
-    >
-      <text>
-        Are you ready to discuss the signal?
-      </text>
-      <choice
-        GotoID="Signal"
-        IfHasReceivedAPItem="Unlock: Decoding the Signal~Get Q Girl's Instructions onto the Data Disk"
-        >Yes</choice
-      >
-      <choice
-        GotoID="End"
-        IfNotHasReceivedAPItem="Unlock: Decoding the Signal~Get Q Girl's Instructions onto the Data Disk"
-        >[AP] I would like to, but I'm waiting for permission.</choice
-      >
+    <node ID="Overripe">
+      <choice GotoID="End" StartQuest="The Earl of Omonporch" Load="Remove"></choice>
+      <choice GotoID="End" StartQuest="The Earl of Omonporch" IfHasReceivedAPItem="Consortium Token">
+        I will secure the Spindle for Barathrum.
+      </choice>
+      <choice GotoID="End" IfNotHasReceivedAPItem="Consortium Token">
+        [AP] (To enter into negotiations with this Earl, I'll need a {{m|Consortium Token}}.)
+      </choice>
+    </node>
+    <node ID="Ripe1">
+      <choice GotoID="End" StartQuest="The Earl of Omonporch" Load="Remove"></choice>
+      <choice GotoID="End" StartQuest="The Earl of Omonporch" IfHasReceivedAPItem="Consortium Token">
+        I will secure the Spindle for Barathrum.
+      </choice>
+      <choice GotoID="End" IfNotHasReceivedAPItem="Consortium Token">
+        [AP] (To enter into negotiations with this Earl, I'll need a {{m|Consortium Token}}.)
+      </choice>
+    </node>
+    <node ID="Ripe2">
+      <choice GotoID="End" StartQuest="The Earl of Omonporch" Load="Remove"></choice>
+      <choice GotoID="End" StartQuest="The Earl of Omonporch" IfHasReceivedAPItem="Consortium Token">
+        I will secure the Spindle for Barathrum.
+      </choice>
+      <choice GotoID="End" IfNotHasReceivedAPItem="Consortium Token">
+        [AP] (To enter into negotiations with this Earl, I'll need a {{m|Consortium Token}}.)
+      </choice>
     </node>
   </conversation>
 </conversations>

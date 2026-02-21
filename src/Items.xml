@@ -21,4 +21,11 @@
   <object Name="Kindrish" Load="Merge">
     <part Name="APTaken" APLocation="Kindrish"></part>
   </object>
+  <object Name="Scrapped Waydroid" Inherits="Item" Load="Merge">
+    <part Name="Description"
+      Short="Here lies the metallic husk of a defunct waydroid. It's been stripped of its valuables: copper wire, LEDs, and chrome bearings. It beeps and whirs no longer.
+      
+      With a {{m|Waydroid Repair Kit}}, you could restore some of its former glory." />
+    <part Name="APWaydroid" />
+  </object>
 </objects>

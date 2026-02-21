@@ -23,4 +23,22 @@ namespace XRL.World.Parts
             return base.HandleEvent(E);
         }
     }
+
+    public class APWaydroid : IPart {
+        public override bool WantEvent(int ID, int cascade)
+        {
+            return ID == GetInventoryActionsEvent.ID;
+        }
+
+        public override bool HandleEvent(GetInventoryActionsEvent E)
+        {
+            var EventData = E;
+            if (E.Actor.IsPlayer() && !APGame.Instance.HasReceivedItem("Waydroid Repair Kit"))
+            {
+                EventData.Actions.Remove("Repair");
+            }
+
+            return base.HandleEvent(EventData);
+        }
+    }
 }
