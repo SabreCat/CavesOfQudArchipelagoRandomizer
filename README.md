@@ -3,7 +3,9 @@
   * By gaining XP. The amount of checks per level can be configured.
   * Main quest and early game side quest steps
   * Deliver items to Argyve or the Grit Gate Intercom (talk with them to see a list).
-  * Finding guaranteed-spawn lore items, such as sheaves of variously damaged parchment.
+  * Find guaranteed-spawn lore items, such as sheaves of variously damaged parchment.
+  * If you want a challenging hunt, the option of finding storied lost artifacts like the Ruin of
+    House Isner.
 * Items to receive:
   * Level up gains (HP, mutation points, skill points, attribute points / bonus). These are
     considered the main progress mechanic because they mainly limit what a player can do and where
@@ -22,6 +24,7 @@
   * ExtraLocationLevels: Additional levels beyond the recommended level for starting the main quests
     included in checks (and received stat ups)
   * TrapPercentage: The percentage of filler items replaced by traps
+  * LostArtifacts: Include three tricky-to-find artifacts as locations
 * Ingame options:
   * Show popups or not when receiving items or traps
   * Allow traps to be triggered in settlements or not
