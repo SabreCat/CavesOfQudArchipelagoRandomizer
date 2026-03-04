@@ -30,17 +30,22 @@
       >
     </start>
     <start ID="TheWire">
-      <choice
+			<choice
         GotoID="GiveWire"
+        IfFinishedQuestStep="Weirdwire Conduit... Eureka!~Find 200 Feet of Wire"
         IfHasReceivedAPItem="Weirdwire Fusor"
-      ></choice>
+      >
+				<text>Take the wire.</text>
+				<part Name="HaveItem" Blueprints="Wire Strand" Amount="200" Require="true" />
+			</choice>
       <choice
         GotoID="End"
+        IfFinishedQuestStep="Weirdwire Conduit... Eureka!~Find 200 Feet of Wire"
         IfNotHasReceivedAPItem="Weirdwire Fusor"
       >
-      [AP] I have the wire, but it's in pieces. We'll need a {{m|Weirdwire Fusor}} to splice them.
+        [AP] I have the wire, but it's in pieces. We'll need a {{m|Weirdwire Fusor}} to splice them.
       </choice>
-      <choice GotoID="End">I don't have enough yet.</choice>
+      <choice GotoID="End" IfNotFinishedQuestStep="Weirdwire Conduit... Eureka!~Find 200 Feet of Wire">I don't have enough yet.</choice>
     </start>
   </conversation>
   <conversation ID="Gritgate Intercom" Inherits="">
@@ -177,6 +182,7 @@
       </text>
       <choice GotoID="Yes. Go on.">Yes. Go on.</choice>
       <choice GotoID="No.">No.</choice>
+      <choice GotoID="I have not." Load="Remove"></choice>
     </node>
   </conversation>
   <conversation ID="Indrix">
