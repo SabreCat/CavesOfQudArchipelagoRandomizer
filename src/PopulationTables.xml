@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<populations>
+  <population Name="CyberneticImplants_Station" Load="Replace">
+  </population>
+  <population Name="APCybernetics">
+    <group Name="Items" Style="pickone" Weight="1">
+      <table Name="Implants_1and2Pointers" Number="1" Weight="32" />
+      <table Name="Implants_3Pointers" Number="1" Weight="16" />
+      <table Name="Implants_4PlusPointers" Number="1" Weight="8" />
+      <table Name="Implants_4PlusPointersWithCathedras" Number="1" Weight="4" />
+    </group>
+  </population>
+</populations>

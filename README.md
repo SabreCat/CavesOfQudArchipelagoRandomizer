@@ -57,8 +57,8 @@ In general, besides being incomplete and WIP, I think it is very playable now.
 * Install the APWorld file as usual and either generate the template files using the Archipelago
   launcher. This also generates the yaml config file.
 * Start Caves of Qud and enable or approve the mod under "Mods", then start a new game.
-* It's recommended to 1) play roleplay mode, so you don't need to start over when dying, and 2)
-  choose a mutant. And only Joppa start is currently supported.
+* It's recommended to play roleplay mode, so you don't need to start over when dying.
+* Only the Joppa start is currently supported.
 * When creating a new character, the connection is opened after the character has been created. If
   the connection fails, the game will hang. This does not happen when loading an already saved game
   later on.

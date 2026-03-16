@@ -1,5 +1,9 @@
+using HarmonyLib;
+using Qud.UI;
 using System.Collections.Generic;
 using XRL;
+using XRL.UI;
+using XRL.UI.Framework;
 using XRL.World;
 using XRL.World.Parts;
 
@@ -83,6 +87,12 @@ public class PlayerStatsMod : IPart
         GameLog.LogGameplay("Granted one of each attribute!", APLocalOptions.PopupOnReceivedItem);
     }
 
+    public void AddLicensePoints(int amount)
+    {
+        ParentObject.ModIntProperty("CyberneticsLicenses", amount, false);
+        GameLog.LogGameplay($"Granted {amount} cybernetics license points!", APLocalOptions.PopupOnReceivedItem);
+    }
+
     public void AddMutationPoints()
     {
         var leveler = ParentObject.GetPart<Leveler>();
@@ -95,8 +105,8 @@ public class PlayerStatsMod : IPart
         }
         else
         {
-            // TODO give something else instead?
-            GameLog.LogGameplay($"Ignored received mutation points as you are not a mutant");
+            // Player rolled a True Kin but left the YAML option as Mutant
+            GameLog.LogGameplay("Ignored received mutation points as you are not a mutant");
         }
     }
 
@@ -112,15 +122,38 @@ public class PlayerStatsMod : IPart
     public void RapidMutationAdvancement()
     {
         var leveler = ParentObject.GetPart<Leveler>();
-        if (!ParentObject.IsEsper())
+        if (ParentObject.IsEsper())
+        {
+            ParentObject.GetStat("Ego").BaseValue += 1;
+            GameLog.LogGameplay("Granted +1 Ego!", APLocalOptions.PopupOnReceivedItem);
+        }
+        else if (ParentObject.IsMutant())
         {
             Leveler.RapidAdvancement(3, ParentObject);
-            GameLog.LogGameplay($"Granted a rapid mutation advancement!", APLocalOptions.PopupOnReceivedItem);
+            // A popup already appears when receiving rapid mutation, so just log it
+            GameLog.LogGameplay($"Granted a rapid mutation advancement!", false);
         }
         else
         {
-            // TODO give something else instead or jsut give it?
-            GameLog.LogGameplay($"Ignored received rapid mutation advancement as you are an esper");
+            // Player rolled a True Kin but left the YAML option as Mutant
+            GameLog.LogGameplay("Ignored rapid mutation advancement as you are not a mutant");
+        }
+    }
+}
+
+namespace Archipelago.HarmonyPatches
+{
+    [HarmonyPatch(typeof(Qud.UI.CyberneticsTerminalScreen), nameof(Qud.UI.CyberneticsTerminalScreen.HandleSelect))]
+    class Patch
+    {
+        static bool Prefix(CyberneticsTerminalLineData element)
+        {
+            if (element.Text == "Upgrade Your License")
+            {
+                Popup.Show("The machine beeps plaintively, unable to reach its long-dead licensing authority.");
+                return false;
+            }
+            return true;
         }
     }
 }

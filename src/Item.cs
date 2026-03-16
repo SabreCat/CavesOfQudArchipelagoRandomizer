@@ -197,6 +197,9 @@ public static class Items
                 case "Attribute Bonus":
                     The.Player.GetPart<PlayerStatsMod>().AddAttributeBonus();
                     return;
+                case "License Points":
+                    The.Player.GetPart<PlayerStatsMod>().AddLicensePoints(2);
+                    return;
                 case "Mutation Point":
                     The.Player.GetPart<PlayerStatsMod>().AddMutationPoints();
                     return;
