@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using XRL;
 using XRL.World;
@@ -26,6 +27,7 @@ namespace APConversations
         public override bool HandleEvent(EnterElementEvent E)
         {
             E.Element.Elements.Clear();
+            List<string> scoutLocations = new List<string>();
 
             foreach (
                 var loc in APStaticData
@@ -54,10 +56,12 @@ namespace APConversations
                         choice.Text =
                             $"{loc.Key} {{{{|&O[{item?.Count ?? 0}/{loc.Value.Amount}]}}}}";
                     }
+                    scoutLocations.Add(loc.Key);
                 }
             }
 
             E.Element.AddChoice(null, "That's all.", "End");
+            APGame.Instance.ScoutLocations(scoutLocations);
 
             return base.HandleEvent(E);
         }

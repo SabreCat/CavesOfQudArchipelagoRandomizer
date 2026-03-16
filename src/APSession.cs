@@ -179,6 +179,16 @@ public static class APSession
             .Invoke(_locations, new object[] { ids });
     }
 
+    public static void ScoutLocations(params long[] ids)
+    {
+        var hintPolicyType = _assembly.GetType("Archipelago.MultiClient.Net.Enums.HintCreationPolicy");
+
+        _locations
+            .GetType()
+            .GetMethod("ScoutLocationsAsync", new Type[] { hintPolicyType, typeof(long[]) })
+            .Invoke(_locations, new object[] { 2, ids });
+    }
+
     public static void SetGoalAchieved()
     {
         _session.GetType().GetMethod("SetGoalAchieved").Invoke(_session, null);

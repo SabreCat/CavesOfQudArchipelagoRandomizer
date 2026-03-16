@@ -226,6 +226,22 @@ public class APGame : IPlayerSystem
         }
     }
 
+    public void ScoutLocations(List<string> locations)
+    {
+        long[] ids = new long[locations.Count];
+        int scoutIndex = 0;
+
+        foreach (
+            var loc in locations
+        )
+        {
+            long id = Data.MissingLocations[loc];
+            ids[scoutIndex] = id;
+            scoutIndex++;
+        }
+        APSession.ScoutLocations(ids);
+    }
+
     public bool HasReceivedItem(string name)
     {
         try
