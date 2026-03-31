@@ -33,7 +33,7 @@ namespace XRL.World.Parts
         public override bool HandleEvent(GetInventoryActionsEvent E)
         {
             var EventData = E;
-            if (E.Actor.IsPlayer() && !APGame.Instance.HasReceivedItem("Waydroid Repair Kit"))
+            if (E.Actor.IsPlayer() && APGame.Instance.ReceivedItemQuantity("Progressive Main Quest") < 5)
             {
                 EventData.Actions.Remove("Repair");
             }

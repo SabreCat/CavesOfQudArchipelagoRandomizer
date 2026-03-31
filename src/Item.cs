@@ -175,18 +175,16 @@ public static class Items
         {
             switch (item.Name)
             {
-                case "Ancient Knickknack":
-                case "Prime Knickknack":
-                case "Weirdwire Fusor":
-                case "Barathrumite Token":
-                case "Waydroid Repair Kit":
-                case "Eschaton Transcoder":
-                case "Baetyl Optronic Adapter":
-                case "Consortium Token":
+                case "Progressive Main Quest":
+                    GameLog.LogGameplay(
+                        "Received main quest unlock!",
+                        APLocalOptions.PopupOnReceivedItem
+                    );
+                    return;
                 case "Water Farmer Token":
                 case "Hindren Token":
                 case "Kyakukya Token":
-                    GameLog.LogGameplay($"Received quest item '{item.Name}'", APLocalOptions.PopupOnReceivedItem);
+                    GameLog.LogGameplay($"Received side quest item '{item.Name}'", APLocalOptions.PopupOnReceivedItem);
                     return;
                 case "Hit Points":
                     The.Player.GetPart<PlayerStatsMod>().AddHitPoints();

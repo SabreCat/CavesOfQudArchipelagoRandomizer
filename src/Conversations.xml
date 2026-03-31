@@ -10,22 +10,22 @@
     <start ID="StartHasFetch1">
       <choice
         Target="GiveKnickknack"
-        IfHasReceivedAPItem="Ancient Knickknack"
+        IfHasReceivedAPQuantity="Progressive Main Quest,1"
       ></choice>
       <choice
         Target="End"
-        IfNotHasReceivedAPItem="Ancient Knickknack"
+        IfNotHasReceivedAPQuantity="Progressive Main Quest,1"
         >[AP] Artifacts I may have, but I still seek an {{m|Ancient Knickknack}} worthy of your notice.</choice
       >
     </start>
     <start ID="StartHasFetch2">
       <choice
         Target="Impressive"
-        IfHasReceivedAPItem="Prime Knickknack"
+        IfHasReceivedAPQuantity="Progressive Main Quest,2"
       ></choice>
       <choice
         Target="End"
-        IfNotHasReceivedAPItem="Prime Knickknack"
+        IfNotHasReceivedAPQuantity="Progressive Main Quest,2"
         >[AP] I will truly impress you when I find a {{m|Prime Knickknack}} to accompany my artifact.</choice
       >
     </start>
@@ -33,7 +33,7 @@
 			<choice
         GotoID="GiveWire"
         IfFinishedQuestStep="Weirdwire Conduit... Eureka!~Find 200 Feet of Wire"
-        IfHasReceivedAPItem="Weirdwire Fusor"
+        IfHasReceivedAPQuantity="Progressive Main Quest,3"
       >
 				<text>Take the wire.</text>
 				<part Name="HaveItem" Blueprints="Wire Strand" Amount="200" Require="true" />
@@ -41,7 +41,7 @@
       <choice
         GotoID="End"
         IfFinishedQuestStep="Weirdwire Conduit... Eureka!~Find 200 Feet of Wire"
-        IfNotHasReceivedAPItem="Weirdwire Fusor"
+        IfNotHasReceivedAPQuantity="Progressive Main Quest,3"
       >
         [AP] I have the wire, but it's in pieces. We'll need a {{m|Weirdwire Fusor}} to splice them.
       </choice>
@@ -67,18 +67,18 @@
         GotoID="GiveDisk"
         IfHaveQuest="A Canticle for Barathrum"
         CompleteQuestStep="A Canticle for Barathrum~Speak with the Barathrumites"
-        IfHasReceivedAPItem="Barathrumite Token"
+        IfHasReceivedAPQuantity="Progressive Main Quest,4"
       >
         Wait! My name is =name=. I bring a message from Argyve of Joppa.
       </choice>
       <choice
         GotoID="End"
         IfHaveQuest="A Canticle for Barathrum"
-        IfNotHasReceivedAPItem="Barathrumite Token"
+        IfNotHasReceivedAPQuantity="Progressive Main Quest,4"
       >
         [AP] (I'll need to present a {{m|Barathrumite Token}} to prove my good intentions.)
       </choice>
-      <choice GotoID="End" IfNotHaveQuest="A Canticle for Barathrum" IfHasReceivedAPItem="Barathrumite Token">...</choice>
+      <choice GotoID="End" IfNotHaveQuest="A Canticle for Barathrum" IfHasReceivedAPQuantity="Progressive Main Quest,4">...</choice>
     </node>
   </conversation>
   <conversation ID="Mehmet">
@@ -200,26 +200,26 @@
   </conversation>
   <conversation ID="Q Girl">
     <node ID="Disk" Load="Replace">
-      <text IfHasReceivedAPItem="Eschaton Transcoder">
+      <text IfHasReceivedAPQuantity="Progressive Main Quest,6">
         I do, brave friend. I'll imprint them now.
       </text>
       <choice
         GotoID="End"
         IfHaveQuest="Decoding the Signal"
-        IfHasReceivedAPItem="Eschaton Transcoder"
+        IfHasReceivedAPQuantity="Progressive Main Quest,6"
         CompleteQuestStep="Decoding the Signal~Get Q Girl's Instructions onto the Data Disk"
         TakeItem="Argyve's Data Disk"
         GiveItem="Argyve's Data Disk Encoded"
       >
         Thank you, Q Girl.
       </choice>
-      <text IfNotHasReceivedAPItem="Eschaton Transcoder">
+      <text IfNotHasReceivedAPQuantity="Progressive Main Quest,6">
         I could, brave friend. But I seem to have misplaced my {{m|Eschaton Transcoder}}. Have you seen it anywhere?
       </text>
       <choice
         GotoID="End"
         IfHaveQuest="Decoding the Signal"
-        IfNotHasReceivedAPItem="Eschaton Transcoder"
+        IfNotHasReceivedAPQuantity="Progressive Main Quest,6"
       >
         [AP] I will search all the worlds until I find one.
       </choice>
@@ -235,7 +235,7 @@
         IfHaveQuest="Decoding the Signal"
         IfFinishedQuestStep="Decoding the Signal~Get Q Girl's Instructions onto the Data Disk"
         IfNotFinishedQuestStep="Decoding the Signal~Decode the Signal"
-        IfHasReceivedAPItem="Baetyl Optronic Adapter"
+        IfHasReceivedAPQuantity="Progressive Main Quest,7"
         CompleteQuestStep="Decoding the Signal~Decode the Signal"
       >
         [Insert Disk]
@@ -245,7 +245,7 @@
         IfHaveQuest="Decoding the Signal"
         IfFinishedQuestStep="Decoding the Signal~Get Q Girl's Instructions onto the Data Disk"
         IfNotFinishedQuestStep="Decoding the Signal~Decode the Signal"
-        IfNotHasReceivedAPItem="Baetyl Optronic Adapter"
+        IfNotHasReceivedAPQuantity="Progressive Main Quest,7"
       >
         [AP] [To your dismay, the disk doesn't fit. You'll need a {{m|Baetyl Optronic Adapter}}.]
       </choice>
@@ -255,16 +255,16 @@
   <conversation ID="Otho" Inherits="BaseSlynthMayor">
     <node ID="Overripe">
       <choice GotoID="End" StartQuest="The Earl of Omonporch" Load="Remove"></choice>
-      <choice GotoID="End" StartQuest="The Earl of Omonporch" IfHasReceivedAPItem="Consortium Token">
+      <choice GotoID="End" StartQuest="The Earl of Omonporch" IfHasReceivedAPQuantity="Progressive Main Quest,8">
         I will secure the Spindle for Barathrum.
       </choice>
-      <choice GotoID="End" IfNotHasReceivedAPItem="Consortium Token">
+      <choice GotoID="End" IfNotHasReceivedAPQuantity="Progressive Main Quest,8">
         [AP] (To enter into negotiations with this Earl, I'll need a {{m|Consortium Token}}.)
       </choice>
     </node>
     <node ID="Ripe1">
       <choice GotoID="End" StartQuest="The Earl of Omonporch" Load="Remove"></choice>
-      <choice GotoID="End" StartQuest="The Earl of Omonporch" IfHasReceivedAPItem="Consortium Token">
+      <choice GotoID="End" StartQuest="The Earl of Omonporch" IfHasReceivedAPQuantity="Progressive Main Quest,8">
         I will secure the Spindle for Barathrum.
       </choice>
       <choice GotoID="End" IfNotHasReceivedAPItem="Consortium Token">
@@ -273,7 +273,7 @@
     </node>
     <node ID="Ripe2">
       <choice GotoID="End" StartQuest="The Earl of Omonporch" Load="Remove"></choice>
-      <choice GotoID="End" StartQuest="The Earl of Omonporch" IfHasReceivedAPItem="Consortium Token">
+      <choice GotoID="End" StartQuest="The Earl of Omonporch" IfHasReceivedAPQuantity="Progressive Main Quest,8">
         I will secure the Spindle for Barathrum.
       </choice>
       <choice GotoID="End" IfNotHasReceivedAPItem="Consortium Token">

@@ -259,6 +259,25 @@ public class APGame : IPlayerSystem
         }
     }
 
+    public int ReceivedItemQuantity(string name)
+    {
+        try
+        {
+            return APSession.ReceivedItems
+                .Where(it => it.Item2 == name)
+                .Count();
+        }
+        catch (NullReferenceException)
+        {
+            return 0;
+        }
+        catch (Exception e)
+        {
+            GameLog.DisplayException(e);
+            return 0;
+        }
+    }
+
     private Random _objectRandom = null;
 
     // Only meant for received AP items (items or traps) - uses its own randomizer to always obtain the same results, even after reload

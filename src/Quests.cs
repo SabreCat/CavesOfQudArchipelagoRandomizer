@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using XRL;
@@ -14,6 +15,16 @@ namespace APConversations
         public static bool IfHasReceivedAPItem(DelegateContext Context)
         {
             return APGame.Instance.HasReceivedItem(Context.Value);
+        }
+
+        [ConversationDelegate]
+        public static bool IfHasReceivedAPQuantity(DelegateContext Context)
+        {
+            // IfHasReceivedAPQuantity="Progressive Main Quest,2"
+            string[] parameters = Context.Value.Split(",");
+            string item = parameters[0];
+            int amount = Int32.Parse(parameters[1]);
+            return APGame.Instance.ReceivedItemQuantity(item) >= amount;
         }
     }
 
