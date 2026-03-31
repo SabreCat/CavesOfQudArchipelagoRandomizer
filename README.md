@@ -10,15 +10,18 @@
   * Level up gains (HP, mutation points, skill points, attribute points / bonus). These are
     considered the main progress mechanic because they mainly limit what a player can do and where
     they can go.
-  * Some steps of the main quest need an item for being unlocked
-  * A ton of filler items to receive into the inventory, picked randomly from the games population
+  * Quest unlocks. Side quest chains require items to commence them, and the main quest line takes
+    a number of "Progressive Main Quest" items depending on the selected goal.
+  * A ton of filler items to receive into the inventory, picked randomly from the game's population
     tables. This can contain garbage as well as high tier weapons or other stuff.
   * Grenade traps: Spawns a couple of grenades/bombs around the player with random timers
   * Creature traps: Spawns a party of creatures around the player (they might not be hostile
     depending on the standing).
 * Settings:
-  * Goal: One of the early main quests. This also determines the max level base after that no more
-    checks are send (and no more stat ups gained).
+  * Goal: One of the early main quests. This also determines the max level base; after that, no more
+    checks are sent, and the multiworld will not contain advancement items for further levels.
+  * Genotype: Whether you'll play Mutant or True Kin characters in this slot. Changes what items are
+    seeded into the multiworld for character advancement.
   * LocationsPerLevel: How many locations shall there be per player level. Increase this to get more
     filler items and traps.
   * ExtraLocationLevels: Additional levels beyond the recommended level for starting the main quests
