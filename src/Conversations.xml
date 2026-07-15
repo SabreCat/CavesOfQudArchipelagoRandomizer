@@ -15,7 +15,7 @@
       <choice
         Target="End"
         IfNotHasReceivedAPQuantity="Progressive Main Quest,1"
-        >[AP] Artifacts I may have, but I still seek an {{m|Ancient Knickknack}} worthy of your notice.</choice
+        >[AP] Artifacts I may have, but I still seek an {{m|Ancient Knickknack}} worthy of your notice. [{{m|Progressive Main Quest}} required]</choice
       >
     </start>
     <start ID="StartHasFetch2">
@@ -26,7 +26,7 @@
       <choice
         Target="End"
         IfNotHasReceivedAPQuantity="Progressive Main Quest,2"
-        >[AP] I will truly impress you when I find a {{m|Prime Knickknack}} to accompany my artifact.</choice
+        >[AP] I will truly impress you when I find a {{m|Prime Knickknack}} to accompany my artifact. [{{m|Progressive Main Quest}} required]</choice
       >
     </start>
     <start ID="TheWire">
@@ -43,7 +43,7 @@
         IfFinishedQuestStep="Weirdwire Conduit... Eureka!~Find 200 Feet of Wire"
         IfNotHasReceivedAPQuantity="Progressive Main Quest,3"
       >
-        [AP] I have the wire, but it's in pieces. We'll need a {{m|Weirdwire Fusor}} to splice them.
+        [AP] I have the wire, but it's in pieces. We'll need a {{m|Weirdwire Fusor}} to splice them. [{{m|Progressive Main Quest}} required]
       </choice>
       <choice GotoID="End" IfNotFinishedQuestStep="Weirdwire Conduit... Eureka!~Find 200 Feet of Wire">I don't have enough yet.</choice>
     </start>
@@ -214,7 +214,7 @@
         Thank you, Q Girl.
       </choice>
       <text IfNotHasReceivedAPQuantity="Progressive Main Quest,6">
-        I could, brave friend. But I seem to have misplaced my {{m|Eschaton Transcoder}}. Have you seen it anywhere?
+        I could, brave friend. But I seem to have misplaced my {{m|Eschaton Transcoder}}. Have you seen it anywhere? [{{m|Progressive Main Quest}} required]
       </text>
       <choice
         GotoID="End"
@@ -247,7 +247,7 @@
         IfNotFinishedQuestStep="Decoding the Signal~Decode the Signal"
         IfNotHasReceivedAPQuantity="Progressive Main Quest,7"
       >
-        [AP] [To your dismay, the disk doesn't fit. You'll need a {{m|Baetyl Optronic Adapter}}.]
+        [AP] [To your dismay, the disk doesn't fit. You'll need a {{m|Baetyl Optronic Adapter}}. ({{m|Progressive Main Quest}} required)]
       </choice>
       <choice GotoID="End">[Leave]</choice>
     </node>
@@ -259,7 +259,7 @@
         I will secure the Spindle for Barathrum.
       </choice>
       <choice GotoID="End" IfNotHasReceivedAPQuantity="Progressive Main Quest,8">
-        [AP] (To enter into negotiations with this Earl, I'll need a {{m|Consortium Token}}.)
+        [AP] (To enter into negotiations with this Earl, I'll need a {{m|Consortium Token}}.) [{{m|Progressive Main Quest}} required]
       </choice>
     </node>
     <node ID="Ripe1">
@@ -268,7 +268,7 @@
         I will secure the Spindle for Barathrum.
       </choice>
       <choice GotoID="End" IfNotHasReceivedAPItem="Consortium Token">
-        [AP] (To enter into negotiations with this Earl, I'll need a {{m|Consortium Token}}.)
+        [AP] (To enter into negotiations with this Earl, I'll need a {{m|Consortium Token}}.) [{{m|Progressive Main Quest}} required]
       </choice>
     </node>
     <node ID="Ripe2">
@@ -277,7 +277,7 @@
         I will secure the Spindle for Barathrum.
       </choice>
       <choice GotoID="End" IfNotHasReceivedAPItem="Consortium Token">
-        [AP] (To enter into negotiations with this Earl, I'll need a {{m|Consortium Token}}.)
+        [AP] (To enter into negotiations with this Earl, I'll need a {{m|Consortium Token}}.) [{{m|Progressive Main Quest}} required]
       </choice>
     </node>
   </conversation>

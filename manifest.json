@@ -1,8 +1,8 @@
 {
     "id": "lonesurv1vor_archipelago",
     "title": "Archipelago Randomizer",
-    "description": "Archipelago Multi-Game Randomizer Mod for Caves of Qud.\n\n{{red|EARLY DEVELOPMENT BUILD - might break your session or your game.}}",
-    "version": "0.6.0",
+    "description": "Archipelago Multi-Game Randomizer Mod for Caves of Qud.",
+    "version": "0.8.2",
     "author": "lonesurv1vor",
     "tags": "Randomizer",
     "directories": [
