@@ -20,6 +20,13 @@ public class PersistentData : IComposite
     public int MaxLevel;
     public int LocationsPerLevel;
 
+    public int SultanSecretsRequired;
+    public int SultanSecretsPerLocation;
+    public int PeriodSultanSecretsRequired;
+    public int PeriodSultanSecretsPerLocation;
+    public int ReshephSecretsRequired;
+    public int ReshephSecretsPerLocation;
+
     public int ItemIndex = 0;
     public int RandomObjectIndex = 0;
 
@@ -123,6 +130,12 @@ public class APGame : IPlayerSystem
             if (
                 !slotData.TryGetValue("goal", out object goal)
                 || !slotData.TryGetValue("locations_per_level", out object locationsPerLevel)
+                || !slotData.TryGetValue("sultan_secrets_required", out object sultanSecretsRequired)
+                || !slotData.TryGetValue("sultan_secrets_per_location", out object sultanSecretsPerLocation)
+                || !slotData.TryGetValue("period_sultan_secrets_required", out object periodSultanSecretsRequired)
+                || !slotData.TryGetValue("period_sultan_secrets_per_location", out object periodSultanSecretsPerLocation)
+                || !slotData.TryGetValue("resheph_secrets_required", out object reshephSecretsRequired)
+                || !slotData.TryGetValue("resheph_secrets_per_location", out object reshephSecretsPerLocation)
             )
             {
                 GameLog.LogError("Couldn't fill slot data", true);
@@ -132,6 +145,13 @@ public class APGame : IPlayerSystem
             Data.Goal = (int)(long)goal;
             Data.MaxLevel = (int)(long)50; // TODO TMP
             Data.LocationsPerLevel = (int)(long)locationsPerLevel;
+
+            Data.SultanSecretsRequired = (int)(long)sultanSecretsRequired;
+            Data.SultanSecretsPerLocation = (int)(long)sultanSecretsPerLocation;
+            Data.PeriodSultanSecretsRequired = (int)(long)periodSultanSecretsRequired;
+            Data.PeriodSultanSecretsPerLocation = (int)(long)periodSultanSecretsPerLocation;
+            Data.ReshephSecretsRequired = (int)(long)reshephSecretsRequired;
+            Data.ReshephSecretsPerLocation = (int)(long)reshephSecretsPerLocation;
 
             SyncLocations();
 

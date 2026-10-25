@@ -19,6 +19,7 @@ public class APPlayerMutator : IPlayerMutator
 
         player.RequirePart<PlayerStatsMod>();
         player.RequirePart<PlayerQuestMod>();
+        player.RequirePart<PlayerSecretsMod>();
     }
 }
 
@@ -42,5 +43,6 @@ public class APLoadGameHandler
 
         The.Player.RequirePart<PlayerStatsMod>();
         The.Player.RequirePart<PlayerQuestMod>();
+        The.Player.RequirePart<PlayerSecretsMod>();
     }
 }
