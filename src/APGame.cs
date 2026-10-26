@@ -19,6 +19,7 @@ public class PersistentData : IComposite
     public int Goal;
     public int MaxLevel;
     public int LocationsPerLevel;
+    public int HistoricSiteItems;
 
     public int SultanSecretsRequired;
     public int SultanSecretsPerLocation;
@@ -136,6 +137,7 @@ public class APGame : IPlayerSystem
                 || !slotData.TryGetValue("period_sultan_secrets_per_location", out object periodSultanSecretsPerLocation)
                 || !slotData.TryGetValue("resheph_secrets_required", out object reshephSecretsRequired)
                 || !slotData.TryGetValue("resheph_secrets_per_location", out object reshephSecretsPerLocation)
+                // || !slotData.TryGetValue("historic_site_items", out object historicSiteItems)
             )
             {
                 GameLog.LogError("Couldn't fill slot data", true);
@@ -145,6 +147,7 @@ public class APGame : IPlayerSystem
             Data.Goal = (int)(long)goal;
             Data.MaxLevel = (int)(long)50; // TODO TMP
             Data.LocationsPerLevel = (int)(long)locationsPerLevel;
+            Data.HistoricSiteItems = 4; // (int)(long)historicSiteItems;
 
             Data.SultanSecretsRequired = (int)(long)sultanSecretsRequired;
             Data.SultanSecretsPerLocation = (int)(long)sultanSecretsPerLocation;
@@ -152,6 +155,7 @@ public class APGame : IPlayerSystem
             Data.PeriodSultanSecretsPerLocation = (int)(long)periodSultanSecretsPerLocation;
             Data.ReshephSecretsRequired = (int)(long)reshephSecretsRequired;
             Data.ReshephSecretsPerLocation = (int)(long)reshephSecretsPerLocation;
+
 
             SyncLocations();
 

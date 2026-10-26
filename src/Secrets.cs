@@ -4,10 +4,19 @@ using System;
 using System.Collections.Generic;
 using XRL;
 using XRL.Annals;
+using XRL.Collections;
+using XRL.Core;
+using XRL.Wish;
 using XRL.World;
 
+[HasWishCommand]
 public class PlayerSecretsMod : IPart
 {
+    public override void Initialize()
+    {
+        BlockHistoricSiteAutomaticReveal();
+    }
+
     public override bool WantEvent(int ID, int cascade)
     {
         return ID == SecretVisibilityChangedEvent.ID;
@@ -117,6 +126,75 @@ public class PlayerSecretsMod : IPart
                     }
                 }
             }
+        }
+
+        return true;
+    }
+
+    private static readonly string _shadowRevealsRegionProp = "lonesurv1vor_archipelago_blockedRevealsRegion";
+
+    protected void BlockHistoricSiteAutomaticReveal()
+    {
+        int orderCutoff = APGame.Instance.Data.SultanSecretsPerLocation;
+        foreach (HistoricEvent evt in The.Game.sultanHistory.events)
+        {
+            if (!evt.HasEventProperty("revealsRegion") || evt.HasEventProperty(_shadowRevealsRegionProp))
+            {
+                continue;
+            }
+            string regionName = evt.GetEventProperty("revealsRegion");
+            string orderProp = The.Game.GetStringGameState($"SultanDungeonPlaced_{regionName}");
+            if (
+                regionName == null
+                || regionName == "unknown"
+                || orderProp == null
+                || !int.TryParse(orderProp, out int order)
+            )
+            {
+                continue;
+            }
+            if (order < orderCutoff)
+            {
+                evt.SetEventProperty("revealsRegion", null);
+                evt.SetEventProperty(_shadowRevealsRegionProp, regionName);
+            }
+        }
+    }
+
+    public void RevealHistoricSite(int SiteID)
+    {
+        HistoricEvent activatedEvent = null;
+        string targetRegion = The.Game.GetStringGameState($"SultanDungeonPlacementOrder_{SiteID}");
+        if (targetRegion == null)
+        {
+            GameLog.LogError($"Couldn't find the region of historic site {SiteID}");
+            return;
+        }
+        foreach (HistoricEvent evt in The.Game.sultanHistory.events)
+        {
+            if (evt.GetEventProperty(_shadowRevealsRegionProp) == targetRegion)
+            {
+                evt.SetEventProperty("revealsRegion", targetRegion);
+                evt.SetEventProperty(_shadowRevealsRegionProp, null);
+                activatedEvent = evt;
+            }
+        }
+        if (activatedEvent != null)
+        {
+            activatedEvent.PerformRegionReveal();
+        }
+        else
+        {
+            GameLog.LogDebug($"Revealed no location for historic site {SiteID} : {targetRegion}");
+        }
+    }
+
+    [WishCommand(Command = "ap_revealsite")]
+    public static bool RevealHistoricSite(string SiteID)
+    {
+        if(The.Player.TryGetPart<PlayerSecretsMod>(out var sm))
+        {
+            sm.RevealHistoricSite(int.Parse(SiteID));
         }
 
         return true;
