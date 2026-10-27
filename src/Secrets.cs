@@ -34,7 +34,7 @@ public class PlayerSecretsMod : IPart
         "Older Historic Site of the Third Sultanate",
         "Historic Site of the Second Sultanate",
         "Historic Site of the First Sultanate",
-    }
+    };
 
     private static Dictionary<string,int> _historicSiteNamesToIndex = null;
     public static Dictionary<string,int> historicSiteNamesToIndex
@@ -164,7 +164,7 @@ public class PlayerSecretsMod : IPart
 
     protected void BlockHistoricSiteAutomaticReveal()
     {
-        int dungeonCount = APGame.Instance.Data.SultanSecretsPerLocation;
+        int dungeonCount = APGame.Instance.Data.HistoricSiteItems;;
         foreach (HistoricEvent evt in The.Game.sultanHistory.events)
         {
             if (!evt.HasEventProperty("revealsRegion") || evt.HasEventProperty(_shadowRevealsRegionProp))
@@ -172,7 +172,6 @@ public class PlayerSecretsMod : IPart
                 continue;
             }
             string regionName = evt.GetEventProperty("revealsRegion");
-            string strDungeonIndex = ;
             if (
                 regionName == null
                 || regionName == "unknown"
@@ -228,12 +227,12 @@ public class PlayerSecretsMod : IPart
         return true;
     }
 
-    public bool HandleEvent(ZoneActivatedEvent E)
+    public override bool HandleEvent(ZoneActivatedEvent E)
     {
-        string historicSite = The.ZoneManager.GetZoneProperty("HistoricSite");
+        string historicSite = E.Zone.GetZoneProperty("HistoricSite");
         if (
             !historicSite.IsNullOrEmpty()
-            && int.TryParse(The.Game.GetStringGameState($"SultanDungeonPlaced_{historicSite}"); , out int dungeonIndex)
+            && int.TryParse(The.Game.GetStringGameState($"SultanDungeonPlaced_{historicSite}") , out int dungeonIndex)
         )
         {
             MaybeCheckVisitedHistoricSite(dungeonIndex);
@@ -247,6 +246,8 @@ public class PlayerSecretsMod : IPart
                 MaybeCheckExploredHistoricSite(dungeonIndex);
             }
         }
+
+        return true;
     }
 
     public void MaybeCheckVisitedHistoricSite(int dungeonIndex)
@@ -255,7 +256,10 @@ public class PlayerSecretsMod : IPart
         {
             APGame.Instance.CheckLocation($"Visit {historicSiteNames[dungeonIndex]}");
         }
+    }
 
+    public void MaybeCheckExploredHistoricSite(int dungeonIndex)
+    {
         if (dungeonIndex < APGame.Instance.Data.HistoricSiteExploreLocations)
         {
             APGame.Instance.CheckLocation($"Explore {historicSiteNames[dungeonIndex]}");

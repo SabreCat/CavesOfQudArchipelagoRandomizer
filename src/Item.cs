@@ -61,11 +61,6 @@ public class Item : IComposite
         return def != null && def.Type == "liquid";
     }
 
-    public bool IsHistoricSiteLocation()
-    {
-        return PlayerSecretsMod.HistoricSiteNamesToIndex.ContainsKey(Name);
-    }
-
     public string Blueprint()
     {
         return APStaticData.Items[Name].Blueprint;
@@ -172,6 +167,10 @@ public static class Items
         }
         else if (PlayerSecretsMod.historicSiteNamesToIndex.TryGetValue(item.Name, out var dungeonIndex))
         {
+            GameLog.LogGameplay(
+                $"Received the location of the {PlayerSecretsMod.historicSiteNames[dungeonIndex]}!",
+                APLocalOptions.PopupOnReceivedItem
+            );
             The.Player.GetPart<PlayerSecretsMod>().RevealHistoricSite(dungeonIndex);
         }
         // else if (item.IsLiquid())
