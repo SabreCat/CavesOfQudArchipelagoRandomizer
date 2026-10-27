@@ -168,7 +168,7 @@ public static class Items
         else if (PlayerSecretsMod.historicSiteNamesToIndex.TryGetValue(item.Name, out var dungeonIndex))
         {
             GameLog.LogGameplay(
-                $"Received the location of the {PlayerSecretsMod.historicSiteNames[dungeonIndex]}!",
+                $"Received the location of the {APStaticData.HistoricSiteDefs[dungeonIndex].Name}!",
                 APLocalOptions.PopupOnReceivedItem
             );
             The.Player.GetPart<PlayerSecretsMod>().RevealHistoricSite(dungeonIndex);

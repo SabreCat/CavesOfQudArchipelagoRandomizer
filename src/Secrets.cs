@@ -23,35 +23,15 @@ public class PlayerSecretsMod : IPart
                || ID == ZoneActivatedEvent.ID;
     }
 
-    public static List<string> historicSiteNames = new List<string>
+    public static Dictionary<string,int> HistoricSitesNameToIndex = LoadHistoricSiteNameToIndex();
+    private static Dictionary<string,int> LoadHistoricSiteNameToIndex()
     {
-        // order should match world generation order (low->high tier)
-        "Historic Site of the Fifth Sultanate",
-        "Older Historic Site of the Fifth Sultanate",
-        "Historic Site of the Fourth Sultanate",
-        "Older Historic Site of the Fourth Sultanate",
-        "Historic Site of the Third Sultanate",
-        "Older Historic Site of the Third Sultanate",
-        "Historic Site of the Second Sultanate",
-        "Historic Site of the First Sultanate",
-    };
-
-    private static Dictionary<string,int> _historicSiteNamesToIndex = null;
-    public static Dictionary<string,int> historicSiteNamesToIndex
-    {
-        get
+        Dictionary<string,int> tbl = new();
+        for (int i = 0; i < APStaticData.HistoricSiteDefs.Count; i++)
         {
-            if (_historicSiteNamesToIndex == null)
-            {
-                Dictionary<string,int> tbl = new();
-                for (int i = 0; i < historicSiteNames.Count; i++)
-                {
-                    tbl.Add(historicSiteNames[i], i);
-                }
-                _historicSiteNamesToIndex = tbl;
-            }
-            return _historicSiteNamesToIndex;
+            tbl.Add(APStaticData.HistoricSiteDefs[i].Name, i);
         }
+        return tbl;
     }
 
     private static Dictionary<string,int> _sultanPeriodTable = null;
@@ -254,7 +234,7 @@ public class PlayerSecretsMod : IPart
     {
         if (dungeonIndex < APGame.Instance.Data.HistoricSiteVisitLocations)
         {
-            APGame.Instance.CheckLocation($"Visit {historicSiteNames[dungeonIndex]}");
+            APGame.Instance.CheckLocation($"Visit {APStaticData.HistoricSiteDefs[dungeonIndex].Name}");
         }
     }
 
@@ -262,7 +242,7 @@ public class PlayerSecretsMod : IPart
     {
         if (dungeonIndex < APGame.Instance.Data.HistoricSiteExploreLocations)
         {
-            APGame.Instance.CheckLocation($"Explore {historicSiteNames[dungeonIndex]}");
+            APGame.Instance.CheckLocation($"Explore {APStaticData.HistoricSiteDefs[dungeonIndex].Name}");
         }
     }
 }

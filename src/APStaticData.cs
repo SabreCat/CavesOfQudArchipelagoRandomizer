@@ -24,6 +24,15 @@ public class ItemInfo
     public string Population;
 }
 
+[System.Serializable]
+public class HistoricSiteInfo
+{
+    public string Name;
+    public int VisitLevel;
+    public int ExploreLevel;
+    public string RegionName;
+}
+
 public static class APStaticData
 {
     // The mods folder must not be renamed or this path doesn't match
@@ -55,5 +64,16 @@ public static class APStaticData
         );
         var items = JsonConvert.DeserializeObject<Dictionary<string, ItemInfo>>(json);
         return items;
+    }
+
+    public static readonly List<HistoricSiteInfo> HistoricSiteDefs = LoadStaticHistoricSiteDefs();
+
+    private static List<HistoricSiteInfo> LoadStaticHistoricSiteDefs()
+    {
+        string json = File.ReadAllText(
+            _modPath + @"/Archipelago/worlds/cavesofqud/data/HistoricSites.json"
+        );
+        var sites = JsonConvert.DeserializeObject<List<HistoricSiteInfo>>(json);
+        return sites;
     }
 }
