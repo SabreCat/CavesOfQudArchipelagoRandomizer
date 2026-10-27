@@ -61,6 +61,11 @@ public class Item : IComposite
         return def != null && def.Type == "liquid";
     }
 
+    public bool IsHistoricSiteLocation()
+    {
+        return PlayerSecretsMod.HistoricSiteNamesToIndex.ContainsKey(Name);
+    }
+
     public string Blueprint()
     {
         return APStaticData.Items[Name].Blueprint;
@@ -165,6 +170,10 @@ public static class Items
                 The.Player.Inventory.AddObject(bp.Name);
             }
         }
+        else if (PlayerSecretsMod.historicSiteNamesToIndex.TryGetValue(item.Name, out var dungeonIndex))
+        {
+            The.Player.GetPart<PlayerSecretsMod>().RevealHistoricSite(dungeonIndex);
+        }
         // else if (item.IsLiquid())
         // {
         //     GameLog.LogGameplay($"Received {item.Amount()} '{first.DisplayName}'", APLocalOptions.PopupOnReceivedItem);
@@ -206,30 +215,6 @@ public static class Items
                     return;
                 case "Rapid Mutation Advancement":
                     The.Player.GetPart<PlayerStatsMod>().RapidMutationAdvancement();
-                    return;
-                case "Historic Site of the Fifth Sultanate":
-                    The.Player.GetPart<PlayerSecretsMod>().RevealHistoricSite(0);
-                    return;
-                case "Older Historic Site of the Fifth Sultanate":
-                    The.Player.GetPart<PlayerSecretsMod>().RevealHistoricSite(1);
-                    return;
-                case "Historic Site of the Fourth Sultanate":
-                    The.Player.GetPart<PlayerSecretsMod>().RevealHistoricSite(2);
-                    return;
-                case "Older Historic Site of the Fourth Sultanate":
-                    The.Player.GetPart<PlayerSecretsMod>().RevealHistoricSite(3);
-                    return;
-                case "Historic Site of the Third Sultanate":
-                    The.Player.GetPart<PlayerSecretsMod>().RevealHistoricSite(4);
-                    return;
-                case "Older Historic Site of the Third Sultanate":
-                    The.Player.GetPart<PlayerSecretsMod>().RevealHistoricSite(5);
-                    return;
-                case "Historic Site of the Second Sultanate":
-                    The.Player.GetPart<PlayerSecretsMod>().RevealHistoricSite(6);
-                    return;
-                case "Historic Site of the First Sultanate":
-                    The.Player.GetPart<PlayerSecretsMod>().RevealHistoricSite(7);
                     return;
                 default:
                     GameLog.LogError($"Unknown item '{item.Name}' with id {item.Id}");

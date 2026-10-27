@@ -138,6 +138,8 @@ public class APGame : IPlayerSystem
                 || !slotData.TryGetValue("resheph_secrets_required", out object reshephSecretsRequired)
                 || !slotData.TryGetValue("resheph_secrets_per_location", out object reshephSecretsPerLocation)
                 || !slotData.TryGetValue("reveal_historic_site_item_count", out object historicSiteItems)
+                || !slotData.TryGetValue("historic_site_visit_locations", out object historicSiteVisitLocations)
+                || !slotData.TryGetValue("historic_site_explore_locations", out object historicSiteExploreLocations)
             )
             {
                 GameLog.LogError("Couldn't fill slot data", true);
@@ -147,7 +149,10 @@ public class APGame : IPlayerSystem
             Data.Goal = (int)(long)goal;
             Data.MaxLevel = (int)(long)50; // TODO TMP
             Data.LocationsPerLevel = (int)(long)locationsPerLevel;
+
             Data.HistoricSiteItems = (int)(long)historicSiteItems;
+            Data.HistoricSiteVisitLocations = (int)(long)historicSiteVisitLocations;
+            Data.HistoricSiteExploreLocations = (int)(long)historicSiteExploreLocations;
 
             Data.SultanSecretsRequired = (int)(long)sultanSecretsRequired;
             Data.SultanSecretsPerLocation = (int)(long)sultanSecretsPerLocation;

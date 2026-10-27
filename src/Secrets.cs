@@ -19,7 +19,39 @@ public class PlayerSecretsMod : IPart
 
     public override bool WantEvent(int ID, int cascade)
     {
-        return ID == SecretVisibilityChangedEvent.ID;
+        return ID == SecretVisibilityChangedEvent.ID
+               || ID == ZoneActivatedEvent.ID;
+    }
+
+    public static List<string> historicSiteNames = new List<string>
+    {
+        // order should match world generation order (low->high tier)
+        "Historic Site of the Fifth Sultanate",
+        "Older Historic Site of the Fifth Sultanate",
+        "Historic Site of the Fourth Sultanate",
+        "Older Historic Site of the Fourth Sultanate",
+        "Historic Site of the Third Sultanate",
+        "Older Historic Site of the Third Sultanate",
+        "Historic Site of the Second Sultanate",
+        "Historic Site of the First Sultanate",
+    }
+
+    private static Dictionary<string,int> _historicSiteNamesToIndex = null;
+    public static Dictionary<string,int> historicSiteNamesToIndex
+    {
+        get
+        {
+            if (_historicSiteNamesToIndex == null)
+            {
+                Dictionary<string,int> tbl = new();
+                for (int i = 0; i < historicSiteNames.Count; i++)
+                {
+                    tbl.Add(historicSiteNames[i], i);
+                }
+                _historicSiteNamesToIndex = tbl;
+            }
+            return _historicSiteNamesToIndex;
+        }
     }
 
     private static Dictionary<string,int> _sultanPeriodTable = null;
@@ -41,9 +73,6 @@ public class PlayerSecretsMod : IPart
                     tbl.Add(id, nextPeriod);
                     nextPeriod += 1;
                 }
-                GameLog.LogDebug(
-                    $"Computed a sultan history {nextPeriod-1} periods long"
-                );
                 _sultanPeriodTable = tbl;
             }
             return _sultanPeriodTable;
@@ -52,8 +81,8 @@ public class PlayerSecretsMod : IPart
 
     private static bool IsSecretLocation(int secretsFound, int secretsPerLoc, int maxSecrets)
     {
-        return (secretsFound == maxSecrets) ||
-               (secretsFound < maxSecrets && secretsFound % secretsPerLoc == 0);
+        return secretsFound == maxSecrets
+               || secretsFound < maxSecrets && secretsFound % secretsPerLoc == 0;
     }
 
     public override bool HandleEvent(SecretVisibilityChangedEvent E)
@@ -135,7 +164,7 @@ public class PlayerSecretsMod : IPart
 
     protected void BlockHistoricSiteAutomaticReveal()
     {
-        int orderCutoff = APGame.Instance.Data.SultanSecretsPerLocation;
+        int dungeonCount = APGame.Instance.Data.SultanSecretsPerLocation;
         foreach (HistoricEvent evt in The.Game.sultanHistory.events)
         {
             if (!evt.HasEventProperty("revealsRegion") || evt.HasEventProperty(_shadowRevealsRegionProp))
@@ -143,17 +172,16 @@ public class PlayerSecretsMod : IPart
                 continue;
             }
             string regionName = evt.GetEventProperty("revealsRegion");
-            string orderProp = The.Game.GetStringGameState($"SultanDungeonPlaced_{regionName}");
+            string strDungeonIndex = ;
             if (
                 regionName == null
                 || regionName == "unknown"
-                || orderProp == null
-                || !int.TryParse(orderProp, out int order)
+                || !int.TryParse(The.Game.GetStringGameState($"SultanDungeonPlaced_{regionName}"), out int dungeonIndex)
             )
             {
                 continue;
             }
-            if (order < orderCutoff)
+            if (dungeonIndex < dungeonCount)
             {
                 evt.SetEventProperty("revealsRegion", null);
                 evt.SetEventProperty(_shadowRevealsRegionProp, regionName);
@@ -161,13 +189,13 @@ public class PlayerSecretsMod : IPart
         }
     }
 
-    public void RevealHistoricSite(int SiteID)
+    public void RevealHistoricSite(int SiteIndex)
     {
+        string targetRegion = The.Game.GetStringGameState($"SultanDungeonPlacementOrder_{SiteIndex}");
         HistoricEvent activatedEvent = null;
-        string targetRegion = The.Game.GetStringGameState($"SultanDungeonPlacementOrder_{SiteID}");
         if (targetRegion == null)
         {
-            GameLog.LogError($"Couldn't find the region of historic site {SiteID}");
+            GameLog.LogError($"Couldn't find the region of historic site {SiteIndex}");
             return;
         }
         foreach (HistoricEvent evt in The.Game.sultanHistory.events)
@@ -185,18 +213,52 @@ public class PlayerSecretsMod : IPart
         }
         else
         {
-            GameLog.LogDebug($"Revealed no location for historic site {SiteID} : {targetRegion}");
+            GameLog.LogDebug($"Revealed no location for historic site {SiteIndex} : {targetRegion}");
         }
     }
 
     [WishCommand(Command = "ap_revealsite")]
-    public static bool RevealHistoricSite(string SiteID)
+    public static bool RevealHistoricSite(string SiteIndex)
     {
         if(The.Player.TryGetPart<PlayerSecretsMod>(out var sm))
         {
-            sm.RevealHistoricSite(int.Parse(SiteID));
+            sm.RevealHistoricSite(int.Parse(SiteIndex));
         }
 
         return true;
+    }
+
+    public bool HandleEvent(ZoneActivatedEvent E)
+    {
+        string historicSite = The.ZoneManager.GetZoneProperty("HistoricSite");
+        if (
+            !historicSite.IsNullOrEmpty()
+            && int.TryParse(The.Game.GetStringGameState($"SultanDungeonPlaced_{historicSite}"); , out int dungeonIndex)
+        )
+        {
+            MaybeCheckVisitedHistoricSite(dungeonIndex);
+
+            string zoneBelowId = The.ZoneManager.GetZoneFromIDAndDirection(E.Zone.ZoneID, "d");
+            if (
+                !The.ZoneManager.TryGetZoneProperty(zoneBelowId, "HistoricSite", out string belowHistoricSite)
+                && belowHistoricSite == historicSite
+            )
+            {
+                MaybeCheckExploredHistoricSite(dungeonIndex);
+            }
+        }
+    }
+
+    public void MaybeCheckVisitedHistoricSite(int dungeonIndex)
+    {
+        if (dungeonIndex < APGame.Instance.Data.HistoricSiteVisitLocations)
+        {
+            APGame.Instance.CheckLocation($"Visit {historicSiteNames[dungeonIndex]}");
+        }
+
+        if (dungeonIndex < APGame.Instance.Data.HistoricSiteExploreLocations)
+        {
+            APGame.Instance.CheckLocation($"Explore {historicSiteNames[dungeonIndex]}");
+        }
     }
 }
