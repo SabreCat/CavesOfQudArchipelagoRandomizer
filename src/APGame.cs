@@ -393,7 +393,7 @@ public class APGame : IPlayerSystem
     public override bool HandleEvent(ZoneActivatedEvent E)
     {
         if (
-            !E.Zone.IsWorldMap()
+            !E.Zone.IsWorldMap() && !The.Player.OnWorldMap() // these can sometimes disagree, e.g. when we discover ruins
             && (APLocalOptions.AllowTrapsInSettlements || !E.Zone.IsCheckpoint())
         )
         {
