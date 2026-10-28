@@ -218,10 +218,7 @@ public class PlayerSecretsMod : IPart
             MaybeCheckVisitedHistoricSite(dungeonIndex);
 
             string zoneBelowId = The.ZoneManager.GetZoneFromIDAndDirection(E.Zone.ZoneID, "d");
-            if (
-                !The.ZoneManager.TryGetZoneProperty(zoneBelowId, "HistoricSite", out string belowHistoricSite)
-                && belowHistoricSite == historicSite
-            )
+            if (The.ZoneManager.GetZoneProperty(zoneBelowId, "HistoricSite") != historicSite)
             {
                 MaybeCheckExploredHistoricSite(dungeonIndex);
             }
