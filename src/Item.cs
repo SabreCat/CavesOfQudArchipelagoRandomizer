@@ -165,7 +165,7 @@ public static class Items
                 The.Player.Inventory.AddObject(bp.Name);
             }
         }
-        else if (PlayerSecretsMod.historicSiteNamesToIndex.TryGetValue(item.Name, out var dungeonIndex))
+        else if (PlayerSecretsMod.HistoricSitesNameToIndex.TryGetValue(item.Name, out var dungeonIndex))
         {
             GameLog.LogGameplay(
                 $"Received the location of the {APStaticData.HistoricSiteDefs[dungeonIndex].Name}!",
