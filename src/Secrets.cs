@@ -144,7 +144,7 @@ public class PlayerSecretsMod : IPart
 
     protected void BlockHistoricSiteAutomaticReveal()
     {
-        int dungeonCount = APGame.Instance.Data.HistoricSiteItems;;
+        int dungeonRevealItemCount = APGame.Instance.Data.HistoricSiteItems;
         foreach (HistoricEvent evt in The.Game.sultanHistory.events)
         {
             if (!evt.HasEventProperty("revealsRegion") || evt.HasEventProperty(_shadowRevealsRegionProp))
@@ -160,7 +160,7 @@ public class PlayerSecretsMod : IPart
             {
                 continue;
             }
-            if (dungeonIndex < dungeonCount)
+            if (dungeonIndex < dungeonRevealItemCount)
             {
                 evt.SetEventProperty("revealsRegion", null);
                 evt.SetEventProperty(_shadowRevealsRegionProp, regionName);
