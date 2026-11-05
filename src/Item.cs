@@ -165,6 +165,14 @@ public static class Items
                 The.Player.Inventory.AddObject(bp.Name);
             }
         }
+        else if (PlayerSecretsMod.HistoricSitesNameToIndex.TryGetValue(item.Name, out var dungeonIndex))
+        {
+            GameLog.LogGameplay(
+                $"Received the location of the {APStaticData.HistoricSiteDefs[dungeonIndex].Name}!",
+                APLocalOptions.PopupOnReceivedItem
+            );
+            The.Player.GetPart<PlayerSecretsMod>().RevealHistoricSite(dungeonIndex);
+        }
         // else if (item.IsLiquid())
         // {
         //     GameLog.LogGameplay($"Received {item.Amount()} '{first.DisplayName}'", APLocalOptions.PopupOnReceivedItem);
