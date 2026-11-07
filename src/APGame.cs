@@ -120,6 +120,18 @@ public class APGame : IPlayerSystem
 
             Data.Seed = APSession.Seed;
 
+            if (!slotData.TryGetValue("world_version", out object worldVersion)
+                || (string)worldVersion != APStaticData.WorldVersion
+            )
+            {
+                GameLog.LogError($"Wrong world version. Game mod: '{APStaticData.WorldVersion}', server: '{worldVersion}'", true);
+                return false;
+            }
+            else
+            {
+                GameLog.LogDebug($"Confirmed world version {worldVersion}");
+            }
+
             if (
                 !slotData.TryGetValue("goal", out object goal)
                 || !slotData.TryGetValue("locations_per_level", out object locationsPerLevel)

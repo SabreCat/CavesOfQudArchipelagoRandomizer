@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using XRL;
 
 [System.Serializable]
@@ -30,6 +31,15 @@ public static class APStaticData
     private static readonly string _modPath = DataManager.SavePath(
         @"Mods/CavesOfQudArchipelagoRandomizer"
     );
+
+    public static readonly string WorldVersion = LoadWorldVersion();
+
+    private static string LoadWorldVersion()
+    {
+        return (string)JObject.Parse(
+            File.ReadAllText(_modPath + @"/Archipelago/worlds/cavesofqud/archipelago.json")
+        )["world_version"];
+    }
 
     public static readonly Assembly MultiClient = Assembly.LoadFrom(
         _modPath + @"/thirdparty/Archipelago.MultiClient.Net.dll"

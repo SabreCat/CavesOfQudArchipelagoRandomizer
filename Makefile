@@ -9,7 +9,7 @@ MOD_DIR_NAME = CavesOfQudArchipelagoRandomizer
 collect:
 	rm -rf "bin/$(MOD_DIR_NAME)"
 	mkdir -p "bin/$(MOD_DIR_NAME)"
-	cp -r --parents manifest.json LICENSE.txt README.md src thirdparty Archipelago/worlds/cavesofqud/data bin/$(MOD_DIR_NAME)
+	cp -r --parents manifest.json LICENSE.txt README.md src thirdparty Archipelago/worlds/cavesofqud/data Archipelago/worlds/cavesofqud/archipelago.json bin/$(MOD_DIR_NAME)
 
 .ONESHELL:
 .PHONY: install
